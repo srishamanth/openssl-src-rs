@@ -461,7 +461,11 @@ impl Build {
             vec!["ssl".to_string(), "crypto".to_string()]
         };
 
-        fs::remove_dir_all(&inner_dir).unwrap();
+        let tmp_remove_dir = fs::remove_dir_all(&inner_dir);
+
+        if tmp_remove_dir.is_err() {
+            println!("Custom debugging {}", tmp_remove_dir.unwrap_err());
+        }
 
         Artifacts {
             lib_dir: install_dir.join("lib"),
